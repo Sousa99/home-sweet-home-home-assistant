@@ -31,3 +31,28 @@ than one USB serial device is connected.
 
 In the ZHA setup flow, use the bridge URL as the serial device path. Select the Silicon Labs EZSP
 radio type, 460800 baud, and hardware flow control if those fields are shown.
+
+## Connected Zigbee devices
+
+### Living Room climate sensor
+
+- Device: SONOFF `SNZB-02D`
+- Home Assistant name: `Living Room Climate Sensor`
+- Integration: ZHA through the Home Assistant Connect ZBT-2
+- Entities: `sensor.living_room_climate_sensor_temperature`,
+  `sensor.living_room_climate_sensor_humidity`, and
+  `sensor.living_room_climate_sensor_battery`
+
+### Living Room window status
+
+- Device: SONOFF `SNZB-04PR2`
+- Home Assistant name: `Window Status`
+- Area: `Living Room`
+- Integration: ZHA through the Home Assistant Connect ZBT-2
+- Opening entity: `binary_sensor.main_area_window_status`
+- Battery entity: `sensor.main_area_window_status_battery`
+- Dashboard: Home Assistant UI-managed `Security`
+
+The Security dashboard is managed through Home Assistant's UI and is not represented as committed
+YAML in this repository. Keep its entity dependencies documented here and include the dashboard in
+Home Assistant backups.
