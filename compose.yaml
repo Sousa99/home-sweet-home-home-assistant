@@ -8,6 +8,7 @@ services:
       TZ: ${TZ:-Europe/Lisbon}
     volumes:
       - ${HASS_CONFIG_DIR:-./config}:/config
+      - ${HASS_BACKUP_DIR:-./backups}:/config/backups
       - /etc/localtime:/etc/localtime:ro
     ports:
       - '${HASS_PORT:-8123}:8123'
