@@ -1,0 +1,11 @@
+.env
+config/secrets.yaml
+config/.storage/
+config/home-assistant_v2.db*
+config/home-assistant.log*
+config/tts/
+config/media/
+config/www/community/
+backups/*.tar
+backups/*.tar.gz
+.DS_Store
