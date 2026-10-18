@@ -7,6 +7,7 @@ config/.ha_run.lock
 config/backups/
 config/blueprints/
 config/home-assistant_v2.db*
+config/zigbee.db*
 config/home-assistant.log*
 config/tts/
 config/media/

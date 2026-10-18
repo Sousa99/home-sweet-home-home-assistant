@@ -2,3 +2,38 @@
 
 Document hardware-specific pairing, Google Home setup, Assist voice pipelines, notification
 delivery, backups, and recovery procedures here as they are established.
+
+## macOS ZBT-2 development setup
+
+Docker Desktop on macOS cannot directly pass the ZBT-2's CDC-ACM serial interface into a
+container. For development, run `scripts/zbt2-serial-bridge.py` on the Mac. It exposes the Mac
+serial device through RFC2217 at `rfc2217://host.docker.internal:6638`.
+
+Start it from the repository root:
+
+```bash
+uv run scripts/zbt2-serial-bridge.py
+```
+
+To keep it running and restart it automatically on macOS:
+
+```bash
+scripts/install-zbt2-launch-agent.sh
+```
+
+The LaunchAgent writes logs to `/tmp/home-sweet-home-zbt2-bridge.log`. The ZBT-2 must be connected
+before or after login; the bridge retries through `launchd` when the serial device is unavailable.
+
+The bridge uses 460800 baud and RTS/CTS hardware flow control, matching the ZBT-2 Zigbee firmware.
+It binds to localhost and supports one Home Assistant connection at a time. Keep the process
+running while ZHA is using the coordinator. Set `ZBT2_SERIAL_PORT` or pass `--serial-port` if more
+than one USB serial device is connected.
+
+In the ZHA setup flow, use the bridge URL as the serial device path. Select the Silicon Labs EZSP
+radio type, 460800 baud, and hardware flow control if those fields are shown.
+
+## Initial dashboard
+
+The `Climate` dashboard is defined in `config/dashboards/climate.yaml` and appears in the Home
+Assistant sidebar after a configuration reload or restart. It shows the living-room temperature,
+humidity, battery level, humidity gauge, and 24-hour history.
