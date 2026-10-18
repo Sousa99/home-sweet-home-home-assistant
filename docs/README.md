@@ -31,9 +31,3 @@ than one USB serial device is connected.
 
 In the ZHA setup flow, use the bridge URL as the serial device path. Select the Silicon Labs EZSP
 radio type, 460800 baud, and hardware flow control if those fields are shown.
-
-## Initial dashboard
-
-The `Climate` dashboard is defined in `config/dashboards/climate.yaml` and appears in the Home
-Assistant sidebar after a configuration reload or restart. It shows the living-room temperature,
-humidity, battery level, humidity gauge, and 24-hour history.

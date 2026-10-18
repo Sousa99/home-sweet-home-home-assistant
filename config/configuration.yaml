@@ -9,12 +9,3 @@ homeassistant:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-
-lovelace:
-  dashboards:
-    climate-dashboard:
-      mode: yaml
-      title: Climate
-      icon: mdi:thermometer
-      show_in_sidebar: true
-      filename: dashboards/climate.yaml
