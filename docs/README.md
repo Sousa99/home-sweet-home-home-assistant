@@ -56,3 +56,44 @@ radio type, 460800 baud, and hardware flow control if those fields are shown.
 The Security dashboard is managed through Home Assistant's UI and is not represented as committed
 YAML in this repository. Keep its entity dependencies documented here and include the dashboard in
 Home Assistant backups.
+
+## Development remote access
+
+The current development host is a macOS machine running Home Assistant Container through Docker
+Desktop. Tailscale is installed on the Mac and on the household phones.
+
+### Current access path
+
+- Home Assistant is published on host port `8123`.
+- Tailscale reaches the Mac host; Docker Desktop forwards port `8123` to Home Assistant.
+- Access uses the Mac's Tailscale IP or MagicDNS hostname with the `http://` scheme and port `8123`.
+- Tailscale Serve is not currently configured.
+- HTTPS is intentionally deferred until the permanent server is deployed.
+
+Do not commit the Tailscale IP, tailnet name, account details, auth keys, or phone identifiers.
+Retrieve the current address with `tailscale ip -4` or from the Tailscale admin console.
+
+### Supported network changes
+
+The Mac can move between the household phones' hotspots and later home Wi-Fi. The remote URL stays
+the same while the Mac is online on Tailscale. If the Mac has no internet connection, remote access
+is unavailable, but local Home Assistant, Zigbee, and automations continue to operate.
+
+Both Tailscale and Home Assistant authentication are required. Each household member should use a
+separate Home Assistant account; do not share credentials.
+
+### Permanent server plan
+
+When Home Assistant moves to the always-on Linux server:
+
+1. Install Tailscale as a host background service.
+2. Restore Home Assistant from the tested backup.
+3. Attach the ZBT-2 directly to the Linux host and replace the macOS serial bridge with a stable
+   `/dev/serial/by-id/...` mapping.
+4. Reconnect the phones to the server's Tailscale hostname.
+5. Configure Tailscale Serve HTTPS only after choosing a neutral server hostname.
+6. In Home Assistant, configure the HTTP reverse-proxy trust settings for the final Serve proxy.
+
+Enabling Tailscale HTTPS publishes the server and tailnet names in Certificate Transparency logs.
+Review those names before enabling certificates. Tailscale is an intentional cloud dependency for
+coordination and remote access; Zigbee control remains local.
