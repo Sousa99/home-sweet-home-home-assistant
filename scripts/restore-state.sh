@@ -40,7 +40,29 @@ for archive in "$import_dir"/*.tar.gz; do
         continue
     fi
 
-    if tar -tzf "$archive" | grep -Eq '(^/|(^|/)\.\.(/|$))'; then
+    if command -v python3 >/dev/null 2>&1; then
+        if ! python3 - "$archive" <<'PY'
+import sys
+import tarfile
+
+try:
+    with tarfile.open(sys.argv[1], "r:gz") as archive:
+        for member in archive.getmembers():
+            name = member.name
+            if name.startswith("/") or ".." in name.split("/"):
+                raise SystemExit(1)
+            if member.issym() or member.islnk():
+                link = member.linkname
+                if link.startswith("/") or ".." in link.split("/"):
+                    raise SystemExit(1)
+except Exception:
+    raise SystemExit(1)
+PY
+        then
+            echo "restore-state: refusing unsafe paths in $base" >&2
+            exit 1
+        fi
+    elif tar -tzf "$archive" | grep -Eq '(^/|(^|/)\.\.(/|$))'; then
         echo "restore-state: refusing unsafe paths in $base" >&2
         exit 1
     fi
