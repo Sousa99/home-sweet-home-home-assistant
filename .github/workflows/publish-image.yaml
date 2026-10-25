@@ -9,6 +9,7 @@ on:
       - '.dockerignore'
       - 'scripts/restore-state.sh'
       - 'scripts/fix-zha-serial.py'
+      - 'scripts/fix-http-proxy.py'
       - '.github/workflows/publish-image.yaml'
   workflow_dispatch:
 

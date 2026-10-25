@@ -71,6 +71,11 @@ The image is consumed by the `home-sweet-lab` cluster. That repository seeds the
 `/config`, restores private state from an uploaded bundle, and runs Home Assistant with a persistent
 volume. The image package must stay public so the cluster can pull it without credentials.
 
+Home Assistant 2026.8+ stores HTTP server settings in `.storage/http` and deprecates the `http:`
+block in `configuration.yaml`. The image includes `scripts/fix-http-proxy.py`, which the cluster runs
+as an init container to enable `X-Forwarded-For` and trust the ingress proxy. Do not re-add the
+deprecated `http:` block.
+
 Building locally:
 
 ```bash
