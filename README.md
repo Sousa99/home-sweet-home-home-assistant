@@ -55,6 +55,12 @@ docker compose up -d
 The exact host, storage, backup, and hardware requirements are documented in [`docs/`](docs/).
 Do not commit `secrets.yaml`, device tokens, OAuth credentials, or generated Home Assistant state.
 
+## Cluster deployment
+
+Production runs in the `home-sweet-lab` k3s cluster. This repository publishes the image that
+cluster consumes; the cluster owns the ZBT-2 and the persistent Home Assistant state. The Compose
+quick start is retained for local development and recovery, not as the primary deployment.
+
 ## Container image
 
 Every push to `main` that changes the tracked configuration publishes an image to GHCR:
