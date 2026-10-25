@@ -1,0 +1,26 @@
+.git
+.github
+.gitignore
+.DS_Store
+.env
+.env.*
+backups
+docs
+README.md
+
+# Home Assistant runtime state and secrets must never enter the image.
+config/.storage
+config/.cloud
+config/backups
+config/blueprints
+config/secrets.yaml
+config/home-assistant_v2.db*
+config/zigbee.db*
+config/home-assistant.log*
+config/.HA_VERSION
+config/.ha_run.lock
+config/.cache
+config/tts
+config/media
+config/www/community
+config/deps

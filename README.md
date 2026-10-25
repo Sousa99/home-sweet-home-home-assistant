@@ -55,6 +55,29 @@ docker compose up -d
 The exact host, storage, backup, and hardware requirements are documented in [`docs/`](docs/).
 Do not commit `secrets.yaml`, device tokens, OAuth credentials, or generated Home Assistant state.
 
+## Container image
+
+Every push to `main` that changes the tracked configuration publishes an image to GHCR:
+
+```text
+ghcr.io/sousa99/home-sweet-home-home-assistant:main-<timestamp>-<sha7>
+```
+
+The image is built from the official Home Assistant image and contains only tracked configuration at
+`/config-seed/`. It never contains `.storage`, databases, backups, secrets, media, or logs. The
+workflow is in [`.github/workflows/publish-image.yaml`](.github/workflows/publish-image.yaml).
+
+The image is consumed by the `home-sweet-lab` cluster. That repository seeds the tracked YAML into
+`/config`, restores private state from an uploaded bundle, and runs Home Assistant with a persistent
+volume. The image package must stay public so the cluster can pull it without credentials.
+
+Building locally:
+
+```bash
+docker build -t home-assistant-config:local .
+docker run --rm home-assistant-config:local ls /config-seed
+```
+
 ## Configuration layout
 
 ```text
