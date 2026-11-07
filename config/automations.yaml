@@ -1,1 +1,44 @@
-[]
+- id: '1794008275893'
+  alias: Charge Server
+  description: ''
+  triggers:
+  - trigger: battery.level_crossed_threshold
+    target:
+      entity_id: sensor.home_sweet_lab_server_battery_level
+    options:
+      behavior: each
+      for: 00:00:00
+      threshold:
+        type: below
+        value:
+          active_choice: number
+          number: 20
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      entity_id: switch.smart_plug
+    data: {}
+  mode: single
+- id: '1794008527371'
+  alias: Server Discharge
+  description: ''
+  triggers:
+  - trigger: battery.level_crossed_threshold
+    target:
+      entity_id: sensor.home_sweet_lab_server_battery_level
+    options:
+      threshold:
+        type: above
+        value:
+          active_choice: number
+          number: 80
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      device_id: 8b757a3e81ddc74e031da1dc3f0a7549
+    data: {}
+  mode: single
