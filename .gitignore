@@ -15,3 +15,9 @@ config/www/community/
 backups/*
 !backups/README.md
 .DS_Store
+
+# Python test and runtime caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
