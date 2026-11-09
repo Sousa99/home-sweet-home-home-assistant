@@ -1,0 +1,27 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Home Sweet Home Agent",
+        "description": "Connect Home Assistant to the Home Sweet Home agent.",
+        "data": {
+          "url": "Agent URL",
+          "token": "Bearer token"
+        },
+        "data_description": {
+          "url": "Private base URL of the agent, for example http://agent.agent.svc.cluster.local:3400.",
+          "token": "Bearer token for the dedicated Home Assistant caller."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach the agent at the configured URL.",
+      "invalid_auth": "The agent rejected the bearer token.",
+      "timeout": "The agent did not respond in time.",
+      "unknown": "Unexpected error while validating the agent configuration."
+    },
+    "abort": {
+      "already_configured": "This agent URL is already configured."
+    }
+  }
+}

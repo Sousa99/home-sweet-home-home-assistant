@@ -24,3 +24,13 @@ config/tts
 config/media
 config/www/community
 config/deps
+
+# Python test and runtime caches
+.venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+tests
+specs
+pytest.ini
+requirements_test.txt
